@@ -40,26 +40,28 @@ def check_mail():
             sender = msg.get("From", "(Unknown Sender)")
             subject = msg.get("Subject", "(No Subject)")
 
-            print("Yeni mesaj var:")
+            print("\nYeni mesaj:")
             print("Gönderen:", sender)
             print("Konu:", subject)
 
             body = None
             for part in msg.walk():
-                if part.get_content_type() == "text/plain" and part.get_payload(decode=True):
-                    try:
-                        body = part.get_payload(decode=True).decode(errors="replace")
-                        break
-                    except Exception as decode_error:
-                        print("İçerik decode hatası:", decode_error)
-
+                if part.get_content_type() == "text/plain":
+                    raw_payload = part.get_payload(decode=True)
+                    if raw_payload:
+                        try:
+                            body = raw_payload.decode(errors="replace")
+                            break
+                        except Exception as decode_error:
+                            print("Decode hatası:", decode_error)
             if body:
                 print("İçerik:\n", body)
                 send_response("YANA'dan yanıt", f"Mesajını aldım:\n\n{body}")
             else:
-                print("E-posta içeriği bulunamadı.")
+                print("İçerik bulunamadı veya çözümlenemedi.")
+
     except Exception as e:
-        print("Hata:", str(e))
+        print("Genel hata:", str(e))
 
 if __name__ == "__main__":
     while True:
