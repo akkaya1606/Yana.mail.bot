@@ -10,7 +10,7 @@ TARGET_SENDER = "akkayaridvan1606@gmail.com"
 
 def check_mail():
     try:
-        mail = imaplib.IMAP4_SSL("imap.protonmail.com")
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
         mail.login(EMAIL, PASSWORD)
         mail.select("inbox")
 
