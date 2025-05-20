@@ -23,7 +23,7 @@ def check_mail():
             msg = email.message_from_bytes(raw_email)
 
             sender = msg["From"]
-            subject = msg.get["Subject", "(No subject)"]
+            subject = msg.get("Subject", "(No subject)")
             if TARGET_SENDER in sender:
                 print("Yeni mesaj var:")
                 print("Konu:", subject)
